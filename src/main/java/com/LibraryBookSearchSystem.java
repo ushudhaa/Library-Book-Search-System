@@ -87,5 +87,12 @@ public class LibraryBookSearchSystem {
                 .limit(limit)
                 .collect(Collectors.toList());
     }
+    public Optional<String> borrowBook(String title) {
+        return findByTitle(title)
+                .filter(Book::isAvailable)
+                .map(book -> {
+                    book.setAvailable(false);
+                    LocalDate dueDate = LocalDate.now().plusWeeks(2);
+                    return "You borrowed \"" + book.getTitle() + "\". Due back on " + dueDate;
 
-}
+                }
