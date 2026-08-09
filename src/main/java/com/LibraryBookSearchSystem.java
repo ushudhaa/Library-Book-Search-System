@@ -59,5 +59,13 @@ public class LibraryBookSearchSystem {
                 .filter(b -> b.getTitle().equalsIgnoreCase(title))
                 .findFirst();
     }
+    public List<Book> findAvailablePublishedAfter(int year) {
+        Predicate<Book> isAvailable = Book::isAvailable;
+        Predicate<Book> publishedAfter = b -> b.getYear() > year;
+
+        return catalog.stream()
+                .filter(isAvailable.and(publishedAfter))
+                .collect(Collectors.toList());
+    }
 
 }
