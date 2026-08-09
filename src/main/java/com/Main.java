@@ -1,17 +1,47 @@
 package com;
+import java.util.*;
+import java.util.stream.*;
+import java.util.function.*;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main {
-    static void main() {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        IO.println(String.format("Hello and welcome!"));
+import java.time.LocalDate;
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            IO.println("i = " + i);
-        }
+class Book {
+    private String title;
+    private String author;
+    private String genre;
+    private int year;
+    private boolean available;
+
+    public Book(String title, String author, String genre, int year, boolean available) {
+        this.title = title;
+        this.author = author;
+        this.genre = genre;
+        this.year = year;
+        this.available = available;
+    }
+
+    public String getTitle() { return title; }
+    public String getAuthor() { return author; }
+    public String getGenre() { return genre; }
+    public int getYear() { return year; }
+    public boolean isAvailable() { return available; }
+    public void setAvailable(boolean available) { this.available = available; }
+
+    @Override
+    public String toString() {
+        return String.format("\"%s\" by %s (%d) [%s] - %s",
+                title, author, year, genre, available ? "Available" : "Checked out");
     }
 }
+
+public class LibraryBookSearchSystem {
+
+    private List<Book> catalog;
+
+    public LibraryBookSearchSystem() {
+        catalog = new ArrayList<>();
+        loadCatalog();
+    }
+
