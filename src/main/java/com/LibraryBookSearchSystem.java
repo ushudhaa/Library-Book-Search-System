@@ -96,3 +96,52 @@ public class LibraryBookSearchSystem {
                     return "You borrowed \"" + book.getTitle() + "\". Due back on " + dueDate;
 
                 }
+        public Map<String, List<String>> titlesByGenre() {
+            return catalog.stream()
+                    .collect(Collectors.groupingBy(Book::getGenre,
+                            Collectors.mapping(Book::getTitle, Collectors.toList())));
+        }
+
+        public static void main(String[] args) {
+            LibraryBookSearchSystem library = new LibraryBookSearchSystem();
+
+            System.out.println("=== Search: 'Dune' ===");
+            Optional<Book> book = library.findByTitle("Dune");
+            System.out.println(book.map(Book::toString).orElse("Not found"));
+
+            System.out.println("\n=== Search: 'Unknown Book' ===");
+            Optional<Book> missing = library.findByTitle("Unknown Book");
+            System.out.println(missing.map(Book::toString).orElse("Not found in catalog"));
+
+            System.out.println("\n=== Available Books Published After 1960 ===");
+            library.findAvailablePublishedAfter(1960).forEach(System.out::println);
+
+            System.out.println("\n=== Genre 'Sci-Fi' OR Author 'Robert Martin' ===");
+            library.findByGenreOrAuthor("Sci-Fi", "Robert Martin").forEach(System.out::println);
+
+            System.out.println("\n=== Currently Unavailable Books ===");
+            library.findUnavailableBooks().forEach(System.out::println);
+
+            System.out.println("\n=== 3 Oldest Books ===");
+            library.oldestBooks(3).forEach(System.out::println);
+
+            System.out.println("\n=== Books Grouped by Genre ===");
+            library.titlesByGenre().forEach((genre, titles) ->
+                    System.out.println(genre + ": " + titles));
+
+            System.out.println("\n=== Borrowing 'Dune' ===");
+            library.borrowBook("Dune").ifPresentOrElse(
+                    System.out::println,
+                    () -> System.out.println("Could not borrow the book.")
+            );
+
+            System.out.println("\n=== Trying to Borrow Already Checked-Out '1984' ===");
+            library.borrowBook("1984").ifPresentOrElse(
+                    System.out::println,
+                    () -> System.out.println("Book unavailable - already checked out.")
+            );
+        }
+    }
+
+
+}
