@@ -75,4 +75,11 @@ public class LibraryBookSearchSystem {
                 .filter(genreMatch.or(authorMatch))
                 .collect(Collectors.toList());
     }
+    public List<Book> findUnavailableBooks() {
+        Predicate<Book> isAvailable = Book::isAvailable;
+        return catalog.stream()
+                .filter(isAvailable.negate())
+                .collect(Collectors.toList());
+    }
+
 }
