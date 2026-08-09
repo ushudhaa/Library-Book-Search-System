@@ -81,5 +81,11 @@ public class LibraryBookSearchSystem {
                 .filter(isAvailable.negate())
                 .collect(Collectors.toList());
     }
+    public List<Book> oldestBooks(int limit) {
+        return catalog.stream()
+                .sorted(Comparator.comparingInt(Book::getYear))
+                .limit(limit)
+                .collect(Collectors.toList());
+    }
 
 }
