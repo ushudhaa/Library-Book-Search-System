@@ -45,3 +45,13 @@ public class LibraryBookSearchSystem {
         loadCatalog();
     }
 
+    private void loadCatalog() {
+        catalog.add(new Book("Clean Code", "Robert Martin", "Programming", 2008, true));
+        catalog.add(new Book("Effective Java", "Joshua Bloch", "Programming", 2018, false));
+        catalog.add(new Book("Dune", "Frank Herbert", "Sci-Fi", 1965, true));
+        catalog.add(new Book("Foundation", "Isaac Asimov", "Sci-Fi", 1951, true));
+        catalog.add(new Book("1984", "George Orwell", "Dystopian", 1949, false));
+        catalog.add(new Book("Brave New World", "Aldous Huxley", "Dystopian", 1932, true));
+        catalog.add(new Book("The Pragmatic Programmer", "Andy Hunt", "Programming", 1999, true));
+    }
+}
