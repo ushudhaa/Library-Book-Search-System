@@ -67,5 +67,12 @@ public class LibraryBookSearchSystem {
                 .filter(isAvailable.and(publishedAfter))
                 .collect(Collectors.toList());
     }
+    public List<Book> findByGenreOrAuthor(String genre, String author) {
+        Predicate<Book> genreMatch = b -> b.getGenre().equalsIgnoreCase(genre);
+        Predicate<Book> authorMatch = b -> b.getAuthor().equalsIgnoreCase(author);
 
+        return catalog.stream()
+                .filter(genreMatch.or(authorMatch))
+                .collect(Collectors.toList());
+    }
 }
