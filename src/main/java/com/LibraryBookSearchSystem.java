@@ -54,4 +54,10 @@ public class LibraryBookSearchSystem {
         catalog.add(new Book("Brave New World", "Aldous Huxley", "Dystopian", 1932, true));
         catalog.add(new Book("The Pragmatic Programmer", "Andy Hunt", "Programming", 1999, true));
     }
+    public Optional<Book> findByTitle(String title) {
+        return catalog.stream()
+                .filter(b -> b.getTitle().equalsIgnoreCase(title))
+                .findFirst();
+    }
+
 }
